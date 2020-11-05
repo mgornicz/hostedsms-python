@@ -80,7 +80,7 @@ class HostedSMSApi(object):
 
     def send_sms(
             self, phone=None, message=None, sender=None, transaction_id=None,
-            validity_period=None, priority=0, flash_sms=False):
+            validity_period=None, priority=0, flash_sms=False, cost_center=None):
         """Call SendSms API method
         :param phone: Phone number where sms should be sent
         :type phone: str
@@ -105,7 +105,7 @@ class HostedSMSApi(object):
         """
         response = self._client.service.SendSms(
             self.username, self.password, phone, message, sender,
-            transaction_id, validity_period, priority, flash_sms)
+            transaction_id, validity_period, priority, flash_sms, cost_center)
         if not response.SendSmsResult:
             raise HostedSMSApiException(response.ErrorMessage)
         return SendSmsResponse(response)
@@ -113,7 +113,7 @@ class HostedSMSApi(object):
     def send_smses(
             self, phones, message=None, sender=None,
             transaction_id=None, validity_period=None, priority=0,
-            flash_sms=False):
+            flash_sms=False,cost_center=None):
         """Call SendSmses API method
         :param phones: Phone numbers where smses should be sent
         :type phones: list of str
@@ -141,7 +141,7 @@ class HostedSMSApi(object):
             phones_obj.string.append(phone)
         response = self._client.service.SendSmses(
             self.username, self.password, phones_obj, message, sender,
-            transaction_id, validity_period, priority, flash_sms)
+            transaction_id, validity_period, priority, flash_sms, cost_center)
         if not response.SendSmsesResult:
             raise HostedSMSApiException(response.ErrorMessage)
         return SendSmsesResponse(response)
